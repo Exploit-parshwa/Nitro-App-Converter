@@ -1,0 +1,38 @@
+modules = ["dotnet-7.0", "web", "nodejs-20"]
+run = "dotnet run"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "dotnet run"]
+
+[workflows]
+runButton = "Run Nitro-App-Converter-Pro"
+
+[[workflows.workflow]]
+name = "Install Dependencies"
+author = 31363572
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run install-all"
+
+[[workflows.workflow]]
+name = "Start Development Server"
+author = 31363572
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+
+[[workflows.workflow]]
+name = "Run Nitro-App-Converter-Pro"
+author = 31363572
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "dotnet run"
